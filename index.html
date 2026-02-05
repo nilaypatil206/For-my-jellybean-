@@ -1,0 +1,261 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Tanvi 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #ffb6c1, #ff69b4);
+}
+
+
+/* Falling roses */
+.rose {
+  position: absolute;
+  top: -50px;
+  font-size: 26px;
+  animation: fall linear infinite;
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+
+@keyframes fall {
+  to {
+    transform: translateY(120vh) rotate(360deg);
+  }
+}
+
+
+/* Floating my ❤️ */
+.love-float {
+  position: absolute;
+  bottom: -40px;
+  font-size: 22px;
+  color: #ff2d55;
+  animation: floatUp 6s linear forwards;
+  pointer-events: none;
+}
+
+
+@keyframes floatUp {
+  from { opacity: 0; transform: translateY(0); }
+  20% { opacity: 1; }
+  to { opacity: 0; transform: translateY(-120vh); }
+}
+
+
+/* Card */
+.card {
+  position: relative;
+  z-index: 5;
+  background: #fff0f5;
+  width: 90%;
+  max-width: 360px;
+  margin: auto;
+  margin-top: 18vh;
+  padding: 30px 20px;
+  border-radius: 22px;
+  text-align: center;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+}
+
+
+h1 {
+  color: #d63384;
+}
+
+
+p {
+  color: #555;
+  min-height: 40px;
+}
+
+
+.buttons {
+  position: relative;
+  height: 120px;
+  margin-top: 20px;
+}
+
+
+button {
+  padding: 12px 28px;
+  font-size: 18px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  position: absolute;
+}
+
+
+#yesBtn {
+  background: #ff4d6d;
+  color: white;
+  left: 30%;
+}
+
+
+#noBtn {
+  background: #adb5bd;
+  color: white;
+  right: 30%;
+}
+
+
+/* Celebration hearts */
+.heart {
+  position: absolute;
+  font-size: 24px;
+  animation: burst 1s ease-out forwards;
+  pointer-events: none;
+}
+
+
+@keyframes burst {
+  from { transform: scale(0); opacity: 1; }
+  to {
+    transform: translate(var(--x), var(--y)) scale(1.5);
+    opacity: 0;
+  }
+}
+
+
+.final {
+  display: none;
+}
+</style>
+</head>
+
+
+<body>
+
+
+<div class="card" id="card">
+  <h1>Tanvi 🌸 will you be my Valentine?</h1>
+  <p id="text">Choose wisely, Jellybean 🎀😌</p>
+
+
+  <div class="buttons">
+    <button id="yesBtn">Yes 💘</button>
+    <button id="noBtn">No 😒</button>
+  </div>
+</div>
+
+
+<div class="card final" id="finalCard">
+  <h1>Good choice 😌💖</h1>
+  <p>
+    You made the right choice, Tanvi 💖<br><br>
+    Now just breathe…<br>
+    leave your mood, your smile,<br>
+    and this moment — on me, Jellybean 🎀
+  </p>
+</div>
+
+
+<script>
+/* Falling roses */
+setInterval(() => {
+  const rose = document.createElement("div");
+  rose.className = "rose";
+  rose.innerText = "🌹";
+  rose.style.left = Math.random() * 100 + "vw";
+  rose.style.animationDuration = (5 + Math.random() * 4) + "s";
+  document.body.appendChild(rose);
+  setTimeout(() => rose.remove(), 9000);
+}, 400);
+
+
+/* Floating my ❤️ */
+setInterval(() => {
+  const love = document.createElement("div");
+  love.className = "love-float";
+  love.innerText = "my ❤️";
+  love.style.left = Math.random() * 90 + "vw";
+  love.style.fontSize = (18 + Math.random() * 10) + "px";
+  document.body.appendChild(love);
+  setTimeout(() => love.remove(), 6000);
+}, 700);
+
+
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const text = document.getElementById("text");
+const card = document.getElementById("card");
+const finalCard = document.getElementById("finalCard");
+
+
+let noCount = 0;
+const messages = [
+  "Nice try, Jellybean 😏",
+  "Are you sure, Tanvi?",
+  "Don’t overthink, Jellybean 😌",
+  "Yeah… that’s my girl."
+];
+
+
+function moveNo() {
+  noCount++;
+
+
+  if (navigator.vibrate) {
+    navigator.vibrate(200);
+  }
+
+
+  const x = Math.random() * 220 - 110;
+  const y = Math.random() * 140 - 70;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+
+
+  if (noCount <= 4) {
+    text.innerText = messages[noCount - 1];
+  }
+
+
+  if (noCount === 4) {
+    noBtn.style.display = "none";
+    text.innerText = "You have no choice, dear 😌💘";
+  }
+}
+
+
+noBtn.addEventListener("click", moveNo);
+noBtn.addEventListener("mouseover", moveNo);
+
+
+yesBtn.addEventListener("click", (e) => {
+  crazyCelebration(e.clientX, e.clientY);
+  setTimeout(() => {
+    card.style.display = "none";
+    finalCard.style.display = "block";
+  }, 800);
+});
+
+
+function crazyCelebration(x, y) {
+  for (let i = 0; i < 30; i++) {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerText = "💖";
+    heart.style.left = x + "px";
+    heart.style.top = y + "px";
+    heart.style.setProperty("--x", (Math.random() * 300 - 150) + "px");
+    heart.style.setProperty("--y", (Math.random() * 300 - 150) + "px");
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 1200);
+  }
+}
+</script>
+
+
+</body>
+</html>
